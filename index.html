@@ -26,47 +26,59 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  html {
+    font-size: 17px;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 18.5px;
+    }
+  }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: #211c17;
     color: var(--ink);
     min-height: 100vh;
-    min-height: -webkit-fill-available;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 16px;
+    align-items: stretch;
+    padding: 10px;
     touch-action: manipulation;
   }
 
   #app {
     width: 100%;
-    max-width: 820px;
+    max-width: 1120px;
     background: var(--bg);
     border-radius: 14px;
     box-shadow: 0 18px 45px rgba(0,0,0,0.45);
     overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   /* BARRA SUPERIOR */
   header {
     background: var(--ink);
     color: #f8f5ef;
-    padding: 12px 20px;
+    padding: 14px 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
   }
 
-  .hud-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .hud-group { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .hud-item {
-    background: rgba(255,255,255,0.09);
-    padding: 6px 11px;
-    border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    padding: 7px 12px;
+    border-radius: 7px;
   }
   .hud-item strong { color: #ffd166; }
   .danger { color: #ff6b6b !important; animation: blink 0.8s infinite; }
@@ -74,143 +86,146 @@
   @keyframes blink { 50% { opacity: 0.3; } }
 
   .btn-top {
-    background: rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.15);
     color: #fff;
     border: none;
-    padding: 8px 13px;
-    border-radius: 7px;
+    padding: 9px 15px;
+    border-radius: 8px;
     font-family: inherit;
-    font-size: 0.84rem;
+    font-size: 0.88rem;
     cursor: pointer;
     transition: background 0.15s;
   }
   .btn-top:hover, .btn-top:active { background: var(--ocean); }
 
-  .progress-bar { height: 5px; background: #e6dec8; width: 100%; }
+  .progress-bar { height: 6px; background: #e6dec8; width: 100%; }
   .progress-fill { height: 100%; background: var(--emerald); width: 0%; transition: width 0.35s ease; }
 
   /* CONTENIDO PRINCIPAL */
   main {
-    padding: 32px 36px;
-    min-height: 450px;
+    flex: 1;
+    padding: 34px 42px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
+  @media (max-width: 767px) {
+    main { padding: 22px 18px; }
+  }
+
   .meta {
-    font-size: 0.8rem;
+    font-size: 0.84rem;
     color: var(--crimson);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   h1, h2 {
     font-family: 'Georgia', serif;
-    font-size: 1.55rem;
-    margin-bottom: 14px;
+    font-size: 1.75rem;
+    margin-bottom: 16px;
     color: var(--ink);
     line-height: 1.25;
   }
 
   p {
     line-height: 1.65;
-    font-size: 1.02rem;
+    font-size: 1.05rem;
     color: #362e26;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
 
   /* TARJETAS VISUALES DE INICIO */
   .alert-pill {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     background: #fff8e6;
     border: 1px solid #f0d799;
-    border-left: 5px solid var(--gold);
-    padding: 13px 16px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
+    border-left: 6px solid var(--gold);
+    padding: 15px 18px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    font-size: 0.98rem;
     color: #5c4308;
   }
-  .alert-pill span.icon { font-size: 1.45rem; }
+  .alert-pill span.icon { font-size: 1.6rem; }
 
   .cards-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 14px;
+    margin-bottom: 22px;
   }
-  @media (max-width: 650px) {
+  @media (max-width: 680px) {
     .cards-3 { grid-template-columns: 1fr; }
-    main { padding: 22px 20px; }
   }
 
   .info-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
+    border-radius: 10px;
+    padding: 18px 16px;
     text-align: center;
   }
-  .info-card .ic-icon { font-size: 1.6rem; margin-bottom: 6px; display: block; }
-  .info-card h3 { font-size: 0.96rem; margin-bottom: 4px; color: var(--ink); }
-  .info-card p { font-size: 0.85rem; color: var(--muted); margin: 0; line-height: 1.45; }
+  .info-card .ic-icon { font-size: 1.8rem; margin-bottom: 8px; display: block; }
+  .info-card h3 { font-size: 1.02rem; margin-bottom: 6px; color: var(--ink); }
+  .info-card p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.45; }
 
   .indicators-bar {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 16px;
-    margin-bottom: 24px;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 26px;
   }
   .indicators-title {
-    font-size: 0.8rem;
+    font-size: 0.84rem;
     font-weight: 700;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     letter-spacing: 0.5px;
   }
   .ind-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px 16px;
-    font-size: 0.9rem;
+    gap: 10px 20px;
+    font-size: 0.95rem;
   }
-  @media (max-width: 600px) { .ind-list { grid-template-columns: 1fr; } }
+  @media (max-width: 650px) { .ind-list { grid-template-columns: 1fr; } }
 
-  .ind-item { display: flex; align-items: center; gap: 8px; }
+  .ind-item { display: flex; align-items: center; gap: 10px; }
   .ind-item strong { color: var(--ink); }
-  .ind-item span { color: var(--muted); font-size: 0.84rem; }
+  .ind-item span { color: var(--muted); font-size: 0.88rem; }
 
   /* CONTEXTO HISTÓRICO INICIAL */
   .history-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 14px 0 22px 0;
+    gap: 16px;
+    margin: 16px 0 24px 0;
   }
-  @media (max-width: 620px) { .history-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 650px) { .history-grid { grid-template-columns: 1fr; } }
 
   .history-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
+    border-radius: 10px;
+    padding: 18px;
   }
   .history-card h4 {
-    font-size: 0.92rem;
+    font-size: 0.96rem;
     color: var(--crimson);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.4px;
   }
   .history-card p {
-    font-size: 0.92rem;
+    font-size: 0.96rem;
     margin: 0;
     line-height: 1.55;
   }
@@ -219,24 +234,24 @@
   .step-rules {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 16px;
-    font-size: 0.94rem;
-    line-height: 1.55;
-    margin-bottom: 16px;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
     color: #362e26;
   }
 
   /* BOTONES TÁCTILES Y ANIMACIONES */
-  .options { display: flex; flex-direction: column; gap: 11px; }
+  .options { display: flex; flex-direction: column; gap: 12px; }
   button.opt {
     background: var(--card);
     border: 1px solid var(--border);
-    padding: 15px 18px;
+    padding: 17px 20px;
     text-align: left;
     font-family: inherit;
-    font-size: 0.97rem;
-    border-radius: 9px;
+    font-size: 1rem;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.15s;
     color: var(--ink);
@@ -267,17 +282,17 @@
     background: var(--emerald);
     color: #ffffff;
     border: none;
-    padding: 15px 28px;
+    padding: 17px 32px;
     font-family: inherit;
-    font-size: 1.02rem;
+    font-size: 1.06rem;
     font-weight: 600;
-    border-radius: 9px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background 0.15s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
   }
   button.primary:hover, button.primary:active {
     background: var(--emerald-hover);
@@ -295,11 +310,11 @@
     background: var(--ocean);
     color: #ffffff;
     border: none;
-    padding: 14px 24px;
+    padding: 16px 28px;
     font-family: inherit;
-    font-size: 0.98rem;
+    font-size: 1.02rem;
     font-weight: 600;
-    border-radius: 9px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background 0.15s;
   }
@@ -322,67 +337,67 @@
   .fs-card {
     background: var(--card);
     border-radius: 14px;
-    max-width: 560px;
+    max-width: 640px;
     width: 100%;
-    padding: 32px;
+    padding: 36px;
     text-align: center;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   }
 
   .fs-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: 1.65rem;
+    margin-bottom: 12px;
   }
 
   .fs-card p {
     text-align: center;
-    font-size: 1rem;
-    margin-bottom: 20px;
+    font-size: 1.04rem;
+    margin-bottom: 22px;
     color: var(--muted);
   }
 
   .status-strip {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 10px;
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 8px;
-    margin-bottom: 16px;
-    font-size: 0.88rem;
+    border-radius: 10px;
+    padding: 14px 10px;
+    margin-bottom: 18px;
+    font-size: 0.92rem;
   }
-  .status-strip div strong { display: block; font-size: 1.05rem; color: var(--ink); margin-top: 2px; }
+  .status-strip div strong { display: block; font-size: 1.12rem; color: var(--ink); margin-top: 3px; }
 
   .badges {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 24px;
-    font-size: 0.92rem;
+    margin-bottom: 26px;
+    font-size: 0.96rem;
     font-weight: 600;
   }
-  .b-pos { color: #155724; background: #d4edda; padding: 6px 13px; border-radius: 6px; }
-  .b-neg { color: #721c24; background: #f8d7da; padding: 6px 13px; border-radius: 6px; }
+  .b-pos { color: #155724; background: #d4edda; padding: 7px 14px; border-radius: 7px; }
+  .b-neg { color: #721c24; background: #f8d7da; padding: 7px 14px; border-radius: 7px; }
 
   /* MINIJUEGOS */
   .mg-box {
     background: var(--card);
     border: 1px solid var(--border);
-    padding: 20px;
-    border-radius: 10px;
+    padding: 24px;
+    border-radius: 12px;
   }
-  .timer-track { height: 8px; background: #ebe4d5; border-radius: 4px; overflow: hidden; margin: 10px 0 16px 0; }
+  .timer-track { height: 9px; background: #ebe4d5; border-radius: 5px; overflow: hidden; margin: 12px 0 18px 0; }
   .timer-fill { height: 100%; background: var(--crimson); width: 100%; transition: width 0.2s linear; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .btn-num {
     background: var(--bg);
     border: 1px solid var(--border);
-    padding: 15px;
+    padding: 18px;
     font-weight: 600;
-    font-size: 1.05rem;
-    border-radius: 9px;
+    font-size: 1.1rem;
+    border-radius: 10px;
     cursor: pointer;
     font-family: inherit;
     transition: all 0.12s;
@@ -391,19 +406,19 @@
   .btn-num:hover, .btn-num:active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
   /* PESCA */
-  .water { position: relative; height: 48px; background: var(--ocean); border-radius: 8px; margin: 16px 0; overflow: hidden; }
+  .water { position: relative; height: 56px; background: var(--ocean); border-radius: 9px; margin: 18px 0; overflow: hidden; }
   .zone { position: absolute; left: 41%; width: 18%; height: 100%; background: rgba(255, 209, 102, 0.65); border-left: 2px solid #ffd166; border-right: 2px solid #ffd166; }
-  .needle { position: absolute; left: 0%; width: 6px; height: 100%; background: #ff4d4d; }
+  .needle { position: absolute; left: 0%; width: 7px; height: 100%; background: #ff4d4d; }
 
-  /* MINIJUEGO DEL BARCO (OPTIMIZADO PARA IPAD TÁCTIL) */
+  /* MINIJUEGO DEL BARCO (AMPLIADO PARA IPAD) */
   .sea-escape {
     position: relative;
     width: 100%;
-    height: 210px;
+    height: 285px;
     background: linear-gradient(180deg, #1d5270 0%, #12354a 100%);
-    border-radius: 9px;
+    border-radius: 10px;
     overflow: hidden;
-    margin: 12px 0;
+    margin: 14px 0;
     touch-action: none;
     cursor: pointer;
   }
@@ -412,32 +427,32 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.14);
     pointer-events: none;
   }
   .player-ship {
     position: absolute;
-    left: 24px;
-    font-size: 1.9rem;
+    left: 30px;
+    font-size: 2.3rem;
     transition: top 0.09s ease-out;
     user-select: none;
     pointer-events: none;
   }
   .obstacle {
     position: absolute;
-    font-size: 1.7rem;
+    font-size: 2.1rem;
     user-select: none;
     pointer-events: none;
   }
   .escape-controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 10px;
+    gap: 16px;
+    margin-top: 12px;
   }
   .escape-controls .btn-num {
-    padding: 16px;
-    font-size: 1.08rem;
+    padding: 18px;
+    font-size: 1.15rem;
   }
 
   /* VISTA PREVIA DEL DIPLOMA FINAL */
@@ -445,28 +460,28 @@
     background: var(--card);
     border: 2px solid var(--gold);
     border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 18px;
+    padding: 22px;
+    margin-bottom: 20px;
   }
 
   input {
-    padding: 13px 15px;
+    padding: 15px 16px;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 9px;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: 1.02rem;
     width: 100%;
-    max-width: 320px;
+    max-width: 360px;
   }
 
   /* MODAL */
   #modal {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.72);
-    justify-content: center; align-items: center; padding: 16px; z-index: 150;
+    justify-content: center; align-items: center; padding: 18px; z-index: 150;
   }
-  .modal-body { background: var(--card); max-width: 640px; width: 100%; padding: 24px; border-radius: 12px; max-height: 82vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-  .entry-item { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #ece5d8; font-size: 0.94rem; line-height: 1.55; }
-  .entry-item h4 { color: var(--crimson); margin-bottom: 4px; font-size: 1rem; }
+  .modal-body { background: var(--card); max-width: 720px; width: 100%; padding: 28px; border-radius: 12px; max-height: 85vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .entry-item { margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #ece5d8; font-size: 0.98rem; line-height: 1.6; }
+  .entry-item h4 { color: var(--crimson); margin-bottom: 6px; font-size: 1.05rem; }
 </style>
 </head>
 <body>
@@ -904,23 +919,23 @@ function closeFullScreenNotice(isDead, isLast) {
 }
 
 // ==========================================
-// MINIJUEGO 1: SUMA INTERMEDIA (CON DECENAS Y UNIDADES)
+// MINIJUEGO 1: SUMA INTERMEDIA
 // ==========================================
 function initMathTimer(w) {
-  const a = (Math.floor(Math.random() * 5) + 4) * 15 + 3; // 63, 78, 93, 108, 123
-  const b = (Math.floor(Math.random() * 5) + 3) * 14 + 5; // 47, 61, 75, 89, 103
-  const c = (Math.floor(Math.random() * 4) + 2) * 12 + 4; // 28, 40, 52, 64
+  const a = (Math.floor(Math.random() * 5) + 4) * 15 + 3;
+  const b = (Math.floor(Math.random() * 5) + 3) * 14 + 5;
+  const c = (Math.floor(Math.random() * 4) + 2) * 12 + 4;
   const ans = a + b + c;
   const opts = [ans, ans + 10, ans - 10, ans + 18].sort(() => Math.random() - 0.5);
   let t = 20;
 
   w.innerHTML = `
     <div class="mg-box">
-      <div style="display:flex; justify-content:space-between; font-size:0.92rem; font-weight:600;">
+      <div style="display:flex; justify-content:space-between; font-size:0.95rem; font-weight:600;">
         <span>Suma los tres lotes:</span><span id="t-lbl" style="color:var(--crimson);">20s</span>
       </div>
       <div class="timer-track"><div class="timer-fill" id="t-bar"></div></div>
-      <p style="text-align:center; font-size:1.3rem; font-weight:bold; margin-bottom:16px;">Seda (${a}) + Porcelana (${b}) + Pimienta (${c}) = ?</p>
+      <p style="text-align:center; font-size:1.35rem; font-weight:bold; margin-bottom:18px;">Seda (${a}) + Porcelana (${b}) + Pimienta (${c}) = ?</p>
       <div class="grid-2">${opts.map(v => `<button class="btn-num" onclick="endMath(${v},${ans})">${v} pesos</button>`).join('')}</div>
     </div>
   `;
@@ -966,7 +981,7 @@ function initFishing(w) {
 
   w.innerHTML = `
     <div class="mg-box" style="text-align:center;">
-      <div id="f-stat" style="font-size:0.95rem; font-weight:600;">Aciertos: 0 • Intentos: 0 / 5</div>
+      <div id="f-stat" style="font-size:0.98rem; font-weight:600;">Aciertos: 0 • Intentos: 0 / 5</div>
       <div class="water"><div class="zone"></div><div class="needle" id="needle"></div></div>
       <button class="primary" id="f-btn">Lanzar Arpón</button>
     </div>
@@ -1010,7 +1025,7 @@ function initFishing(w) {
 function initTradeMath(w) {
   w.innerHTML = `
     <div class="mg-box">
-      <p style="text-align:center; font-weight:bold; font-size:1.15rem; margin-bottom:14px;">(5 fardos × 140 pesos) − 120 pesos de mulas = ?</p>
+      <p style="text-align:center; font-weight:bold; font-size:1.2rem; margin-bottom:16px;">(5 fardos × 140 pesos) − 120 pesos de mulas = ?</p>
       <div class="grid-2">
         <button class="btn-num" onclick="endTrade(580)">580 pesos</button>
         <button class="btn-num" onclick="endTrade(620)">620 pesos</button>
@@ -1032,11 +1047,11 @@ function endTrade(val) {
 }
 
 // ==========================================
-// MINIJUEGO 4 Y 8: BARCO MÁS DIFÍCIL (45 SEGUNDOS / 3 VIDAS / TÁCTIL IPAD)
+// MINIJUEGO 4 Y 8: BARCO (45 SEGUNDOS / 3 VIDAS / ESCALA IPAD)
 // ==========================================
 function initShipEscape(w, mode) {
   let lane = 1;
-  const laneY = [22, 86, 150];
+  const laneY = [26, 118, 210];
   let obstacles = [];
   let timeLeft = 45;
   let lives = 3;
@@ -1046,14 +1061,14 @@ function initShipEscape(w, mode) {
 
   w.innerHTML = `
     <div class="mg-box">
-      <div style="display:flex; justify-content:space-between; font-weight:600; font-size:0.94rem;">
+      <div style="display:flex; justify-content:space-between; font-weight:600; font-size:0.96rem;">
         <span>⏱️ Tiempo: <span id="esc-time" style="color:var(--crimson);">45s</span></span>
         <span>Intensidad: <span id="esc-lvl">1x</span></span>
         <span>Vidas: <span id="esc-lives">❤️❤️❤️</span></span>
       </div>
       <div class="sea-escape" id="sea-escape">
-        <div class="lane-guide" style="top:70px;"></div>
-        <div class="lane-guide" style="top:140px;"></div>
+        <div class="lane-guide" style="top:95px;"></div>
+        <div class="lane-guide" style="top:190px;"></div>
         <div class="player-ship" id="p-ship" style="top:${laneY[lane]}px;">⛵</div>
       </div>
       <div class="escape-controls">
@@ -1080,7 +1095,6 @@ function initShipEscape(w, mode) {
   document.getElementById('btn-up').onclick = () => moveShip(-1);
   document.getElementById('btn-down').onclick = () => moveShip(1);
 
-  // Soporte táctil nativo para iPad (tocar carril o deslizar)
   const arenaEl = document.getElementById('sea-escape');
   let touchStartY = null;
   arenaEl.addEventListener('touchstart', (e) => {
@@ -1088,8 +1102,8 @@ function initShipEscape(w, mode) {
       touchStartY = e.touches[0].clientY;
       const rect = arenaEl.getBoundingClientRect();
       const relY = e.touches[0].clientY - rect.top;
-      if (relY < 70) setLane(0);
-      else if (relY < 140) setLane(1);
+      if (relY < 95) setLane(0);
+      else if (relY < 190) setLane(1);
       else setLane(2);
     }
   }, { passive: true });
@@ -1097,7 +1111,7 @@ function initShipEscape(w, mode) {
   arenaEl.addEventListener('touchmove', (e) => {
     if (touchStartY === null || e.touches.length === 0) return;
     const diffY = e.touches[0].clientY - touchStartY;
-    if (Math.abs(diffY) > 22) {
+    if (Math.abs(diffY) > 24) {
       moveShip(diffY > 0 ? 1 : -1);
       touchStartY = e.touches[0].clientY;
     }
@@ -1106,8 +1120,8 @@ function initShipEscape(w, mode) {
   arenaEl.addEventListener('click', (e) => {
     const rect = arenaEl.getBoundingClientRect();
     const relY = e.clientY - rect.top;
-    if (relY < 70) setLane(0);
-    else if (relY < 140) setLane(1);
+    if (relY < 95) setLane(0);
+    else if (relY < 190) setLane(1);
     else setLane(2);
   });
 
@@ -1170,20 +1184,17 @@ function initShipEscape(w, mode) {
 
     tick++;
     const elapsed = 45 - timeLeft;
-    // Sube de nivel cada 15 segundos (1x, 2x, 3x)
     const level = Math.min(3, Math.floor(elapsed / 15) + 1);
     const lvlEl = document.getElementById('esc-lvl');
     if (lvlEl) lvlEl.textContent = level + 'x';
 
-    // Mayor frecuencia y velocidad que antes
     const spawnInterval = level === 1 ? 13 : (level === 2 ? 10 : 8);
-    const moveSpeed = 9.5 + level * 3.2;
+    const moveSpeed = 10 + level * 3.4;
 
     if (tick % spawnInterval === 0) {
       const obsLane = Math.floor(Math.random() * 3);
       spawnObstacleInLane(arena, obsLane, 0);
 
-      // En nivel 2 y 3 pueden aparecer 2 obstáculos simultáneos dejando siempre 1 carril libre
       if ((level === 2 && Math.random() < 0.45) || (level === 3 && Math.random() < 0.75)) {
         const otherLanes = [0, 1, 2].filter(l => l !== obsLane);
         const secondLane = otherLanes[Math.floor(Math.random() * otherLanes.length)];
@@ -1195,7 +1206,7 @@ function initShipEscape(w, mode) {
       o.x -= moveSpeed;
       o.el.style.left = o.x + 'px';
 
-      if (!o.hit && o.x < 62 && o.x > 16 && o.lane === lane) {
+      if (!o.hit && o.x < 72 && o.x > 18 && o.lane === lane) {
         o.hit = true;
         lives--;
         o.el.textContent = '💥';
@@ -1203,7 +1214,7 @@ function initShipEscape(w, mode) {
         if (lives <= 0) finishEscape();
       }
 
-      if (o.x < -40) {
+      if (o.x < -45) {
         o.el.remove();
         obstacles.splice(i, 1);
       }
@@ -1222,7 +1233,7 @@ function initShipEscape(w, mode) {
 }
 
 // ==========================================
-// PANTALLA FINAL Y DESCARGA DE IMAGEN PNG (SIN TOP 10)
+// PANTALLA FINAL Y DESCARGA DE IMAGEN PNG
 // ==========================================
 function calcScore() {
   const silverScore = Math.min(100, Math.round((st.silver / 1900) * 100));
@@ -1241,11 +1252,9 @@ function downloadDiploma() {
   canvas.height = 560;
   const ctx = canvas.getContext('2d');
 
-  // Fondo pergamino limpio
   ctx.fillStyle = '#f8f5ef';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Marco exterior e interior
   ctx.strokeStyle = '#241e18';
   ctx.lineWidth = 8;
   ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
@@ -1254,7 +1263,6 @@ function downloadDiploma() {
   ctx.lineWidth = 3;
   ctx.strokeRect(34, 34, canvas.width - 68, canvas.height - 68);
 
-  // Encabezado
   ctx.fillStyle = '#962b2b';
   ctx.font = 'bold 18px sans-serif';
   ctx.textAlign = 'center';
@@ -1264,7 +1272,6 @@ function downloadDiploma() {
   ctx.font = 'bold 34px Georgia, serif';
   ctx.fillText('De Manila a Sevilla: Travesía Completada', canvas.width / 2, 132);
 
-  // Nombre del alumno
   ctx.fillStyle = '#665c52';
   ctx.font = '18px sans-serif';
   ctx.fillText('Otorgado a:', canvas.width / 2, 182);
@@ -1273,7 +1280,6 @@ function downloadDiploma() {
   ctx.font = 'bold 32px Georgia, serif';
   ctx.fillText(studentName, canvas.width / 2, 224);
 
-  // Línea divisoria
   ctx.strokeStyle = '#d8ccb8';
   ctx.lineWidth = 2;
   ctx.beginPath();
@@ -1281,12 +1287,10 @@ function downloadDiploma() {
   ctx.lineTo(760, 250);
   ctx.stroke();
 
-  // Promedio destacado
   ctx.fillStyle = '#1c703d';
   ctx.font = 'bold 42px sans-serif';
   ctx.fillText(`Promedio Final: ${avg} / 100`, canvas.width / 2, 308);
 
-  // Tarjetas de los 4 indicadores
   const stats = [
     { label: 'Víveres', val: `${st.food}%` },
     { label: 'Casco', val: `${st.hull}%` },
@@ -1316,12 +1320,10 @@ function downloadDiploma() {
     ctx.fillText(item.val, x + boxW / 2, y + 68);
   });
 
-  // Fecha al pie
   ctx.fillStyle = '#665c52';
   ctx.font = '15px sans-serif';
   ctx.fillText(`Casa de Contratación de Sevilla • ${today}`, canvas.width / 2, 492);
 
-  // Descarga de archivo PNG compatible con iPad Safari
   const fileName = `Resultados_Manila_Sevilla_${studentName.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]/g, '_')}.png`;
   const dataUrl = canvas.toDataURL('image/png');
   const link = document.createElement('a');
@@ -1333,7 +1335,7 @@ function downloadDiploma() {
 
   const feedbackEl = document.getElementById('download-msg');
   if (feedbackEl) {
-    feedbackEl.innerHTML = `Imagen generada. Si estás en iPad y no se guardó directo en Fotos, abre la descarga en Safari (ícono ↓ arriba a la derecha) y elige <strong>"Guardar imagen"</strong>.`;
+    feedbackEl.innerHTML = `Imagen generada. En iPad, abre la descarga en Safari (ícono ↓ arriba a la derecha) y elige <strong>"Guardar imagen"</strong>.`;
   }
 }
 
@@ -1354,7 +1356,7 @@ function renderVictory() {
           <div>🧭 Moral<strong>${st.moral}%</strong></div>
           <div>🪙 Plata<strong>${st.silver} (${silverScore} pts)</strong></div>
         </div>
-        <p style="font-size:0.92rem; color:var(--muted); margin:0;">
+        <p style="font-size:0.95rem; color:var(--muted); margin:0;">
           Escribe tu nombre completo para descargar una imagen con tus estadísticas y guardarla en tu iPad.
         </p>
       </div>
@@ -1364,7 +1366,7 @@ function renderVictory() {
         <button class="primary btn-animated" onclick="downloadDiploma()">📥 Descargar Imagen de Resultados</button>
       </div>
 
-      <p id="download-msg" style="font-size:0.88rem; color:var(--emerald); margin-bottom:16px;"></p>
+      <p id="download-msg" style="font-size:0.92rem; color:var(--emerald); margin-bottom:18px;"></p>
 
       <button class="opt" onclick="renderStart()">Volver al Inicio</button>
     </div>
@@ -1378,7 +1380,7 @@ function openModal(type) {
   const box = document.getElementById('modal-content');
   if (type === 'codex') {
     box.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
         <h2 style="margin:0;">Códice de Lectura Histórica</h2>
         <button class="btn-top" style="background:var(--ink);" onclick="closeModal()">Cerrar</button>
       </div>
@@ -1386,7 +1388,7 @@ function openModal(type) {
     `;
   } else {
     box.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
         <h2 style="margin:0;">Glosario de Términos</h2>
         <button class="btn-top" style="background:var(--ink);" onclick="closeModal()">Cerrar</button>
       </div>
