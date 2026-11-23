@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Ruta Comercial: De Manila a Sevilla</title>
+<style>
+  :root {
+    --bg: #f8f5ef;
+    --card: #ffffff;
+    --ink: #241e18;
+    --muted: #665c52;
+    --crimson: #962b2b;
+    --gold: #c29123;
+    --ocean: #1d5270;
+    --emerald: #1c703d;
+    --emerald-hover: #248a4c;
+    --border: #e2d9c8;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #211c17;
+    color: var(--ink);
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    touch-action: manipulation;
+  }
+
+  #app {
+    width: 100%;
+    max-width: 820px;
+    background: var(--bg);
+    border-radius: 14px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* BARRA SUPERIOR */
+  header {
+    background: var(--ink);
+    color: #f8f5ef;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.88rem;
+  }
+
+  .hud-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .hud-item {
+    background: rgba(255,255,255,0.09);
+    padding: 6px 11px;
+    border-radius: 6px;
+  }
+  .hud-item strong { color: #ffd166; }
+  .danger { color: #ff6b6b !important; animation: blink 0.8s infinite; }
+
+  @keyframes blink { 50% { opacity: 0.3; } }
+
+  .btn-top {
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    border: none;
+    padding: 8px 13px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 0.84rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-top:hover, .btn-top:active { background: var(--ocean); }
+
+  .progress-bar { height: 5px; background: #e6dec8; width: 100%; }
+  .progress-fill { height: 100%; background: var(--emerald); width: 0%; transition: width 0.35s ease; }
+
+  /* CONTENIDO PRINCIPAL */
+  main {
+    padding: 32px 36px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .meta {
+    font-size: 0.8rem;
+    color: var(--crimson);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+
+  h1, h2 {
+    font-family: 'Georgia', serif;
+    font-size: 1.55rem;
+    margin-bottom: 14px;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  p {
+    line-height: 1.65;
+    font-size: 1.02rem;
+    color: #362e26;
+    margin-bottom: 16px;
+  }
+
+  /* TARJETAS VISUALES DE INICIO */
+  .alert-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff8e6;
+    border: 1px solid #f0d799;
+    border-left: 5px solid var(--gold);
+    padding: 13px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: #5c4308;
+  }
+  .alert-pill span.icon { font-size: 1.45rem; }
+
+  .cards-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 650px) {
+    .cards-3 { grid-template-columns: 1fr; }
+    main { padding: 22px 20px; }
+  }
+
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .info-card .ic-icon { font-size: 1.6rem; margin-bottom: 6px; display: block; }
+  .info-card h3 { font-size: 0.96rem; margin-bottom: 4px; color: var(--ink); }
+  .info-card p { font-size: 0.85rem; color: var(--muted); margin: 0; line-height: 1.45; }
+
+  .indicators-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+  }
+  .indicators-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+  .ind-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 600px) { .ind-list { grid-template-columns: 1fr; } }
+
+  .ind-item { display: flex; align-items: center; gap: 8px; }
+  .ind-item strong { color: var(--ink); }
+  .ind-item span { color: var(--muted); font-size: 0.84rem; }
+
+  /* CONTEXTO HISTÓRICO INICIAL */
+  .history-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0 22px 0;
+  }
+  @media (max-width: 620px) { .history-grid { grid-template-columns: 1fr; } }
+
+  .history-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .history-card h4 {
+    font-size: 0.92rem;
+    color: var(--crimson);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .history-card p {
+    font-size: 0.92rem;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* CAJA DE INSTRUCCIÓN DEL RETO */
+  .step-rules {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 0.94rem;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    color: #362e26;
+  }
+
+  /* BOTONES TÁCTILES Y ANIMACIONES */
+  .options { display: flex; flex-direction: column; gap: 11px; }
+  button.opt {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 15px 18px;
+    text-align: left;
+    font-family: inherit;
+    font-size: 0.97rem;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  button.opt:hover, button.opt:active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+
+  @keyframes pulseFloat {
+    0% {
+      transform: scale(1) translateY(0);
+      box-shadow: 0 0 0 0 rgba(28, 112, 61, 0.55);
+    }
+    50% {
+      transform: scale(1.03) translateY(-2px);
+      box-shadow: 0 6px 18px rgba(28, 112, 61, 0.35), 0 0 0 8px rgba(28, 112, 61, 0);
+    }
+    100% {
+      transform: scale(1) translateY(0);
+      box-shadow: 0 0 0 0 rgba(28, 112, 61, 0);
+    }
+  }
+
+  button.primary {
+    background: var(--emerald);
+    color: #ffffff;
+    border: none;
+    padding: 15px 28px;
+    font-family: inherit;
+    font-size: 1.02rem;
+    font-weight: 600;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  button.primary:hover, button.primary:active {
+    background: var(--emerald-hover);
+  }
+
+  button.btn-animated {
+    animation: pulseFloat 2s infinite ease-in-out;
+  }
+  button.btn-animated:hover, button.btn-animated:active {
+    animation: none;
+    transform: scale(1.03);
+  }
+
+  button.secondary {
+    background: var(--ocean);
+    color: #ffffff;
+    border: none;
+    padding: 14px 24px;
+    font-family: inherit;
+    font-size: 0.98rem;
+    font-weight: 600;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  button.secondary:hover, button.secondary:active {
+    background: #26668a;
+  }
+
+  /* PANTALLA DE TRANSICIÓN ENTRE RONDAS */
+  #fullscreen-feedback {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(24, 20, 16, 0.94);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .fs-card {
+    background: var(--card);
+    border-radius: 14px;
+    max-width: 560px;
+    width: 100%;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+
+  .fs-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .fs-card p {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: var(--muted);
+  }
+
+  .status-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 8px;
+    margin-bottom: 16px;
+    font-size: 0.88rem;
+  }
+  .status-strip div strong { display: block; font-size: 1.05rem; color: var(--ink); margin-top: 2px; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .b-pos { color: #155724; background: #d4edda; padding: 6px 13px; border-radius: 6px; }
+  .b-neg { color: #721c24; background: #f8d7da; padding: 6px 13px; border-radius: 6px; }
+
+  /* MINIJUEGOS */
+  .mg-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .timer-track { height: 8px; background: #ebe4d5; border-radius: 4px; overflow: hidden; margin: 10px 0 16px 0; }
+  .timer-fill { height: 100%; background: var(--crimson); width: 100%; transition: width 0.2s linear; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .btn-num {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 15px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.12s;
+    user-select: none;
+  }
+  .btn-num:hover, .btn-num:active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  /* PESCA */
+  .water { position: relative; height: 48px; background: var(--ocean); border-radius: 8px; margin: 16px 0; overflow: hidden; }
+  .zone { position: absolute; left: 41%; width: 18%; height: 100%; background: rgba(255, 209, 102, 0.65); border-left: 2px solid #ffd166; border-right: 2px solid #ffd166; }
+  .needle { position: absolute; left: 0%; width: 6px; height: 100%; background: #ff4d4d; }
+
+  /* MINIJUEGO DEL BARCO (OPTIMIZADO PARA IPAD TÁCTIL) */
+  .sea-escape {
+    position: relative;
+    width: 100%;
+    height: 210px;
+    background: linear-gradient(180deg, #1d5270 0%, #12354a 100%);
+    border-radius: 9px;
+    overflow: hidden;
+    margin: 12px 0;
+    touch-action: none;
+    cursor: pointer;
+  }
+  .lane-guide {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    pointer-events: none;
+  }
+  .player-ship {
+    position: absolute;
+    left: 24px;
+    font-size: 1.9rem;
+    transition: top 0.09s ease-out;
+    user-select: none;
+    pointer-events: none;
+  }
+  .obstacle {
+    position: absolute;
+    font-size: 1.7rem;
+    user-select: none;
+    pointer-events: none;
+  }
+  .escape-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 10px;
+  }
+  .escape-controls .btn-num {
+    padding: 16px;
+    font-size: 1.08rem;
+  }
+
+  /* VISTA PREVIA DEL DIPLOMA FINAL */
+  .diploma-preview {
+    background: var(--card);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 18px;
+  }
+
+  input {
+    padding: 13px 15px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* MODAL */
+  #modal {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.72);
+    justify-content: center; align-items: center; padding: 16px; z-index: 150;
+  }
+  .modal-body { background: var(--card); max-width: 640px; width: 100%; padding: 24px; border-radius: 12px; max-height: 82vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .entry-item { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #ece5d8; font-size: 0.94rem; line-height: 1.55; }
+  .entry-item h4 { color: var(--crimson); margin-bottom: 4px; font-size: 1rem; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header>
+    <div class="hud-group" id="hud" style="display:none;">
+      <span class="hud-item">🍖 Víveres: <strong id="v-food">80</strong>%</span>
+      <span class="hud-item">⛵ Casco: <strong id="v-hull">90</strong>%</span>
+      <span class="hud-item">🧭 Moral: <strong id="v-moral">75</strong>%</span>
+      <span class="hud-item">🪙 Plata: <strong id="v-plata">1000</strong></span>
+    </div>
+    <div id="title-bar" style="font-weight:600;">Ruta Comercial: Manila – Nueva España – Sevilla</div>
+    <div class="hud-group">
+      <button class="btn-top" onclick="openModal('codex')">📖 Códice</button>
+      <button class="btn-top" onclick="openModal('glossary')">📚 Glosario</button>
+      <button class="btn-top" onclick="toggleFullScreen()">⛶ Pantalla</button>
+    </div>
+  </header>
+
+  <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+  <main id="stage"></main>
+</div>
+
+<!-- PANTALLA DE TRANSICIÓN ENTRE RONDAS -->
+<div id="fullscreen-feedback">
+  <div class="fs-card" id="fs-card-content"></div>
+</div>
+
+<!-- MODAL DE CONSULTA -->
+<div id="modal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-body" id="modal-content"></div>
+</div>
+
+<script>
+// ==========================================
+// CÓDICE DE LECTURA HISTÓRICA
+// ==========================================
+const CODEX = [
+  {
+    title: "Documento I: La Plata Americana y el Mercado de Manila",
+    text: "A finales del siglo XVI, la dinastía Ming en China estableció la ley del 'Látigo Único', exigiendo que todos los impuestos se pagaran en plata. Como China tenía pocas minas, el valor de la plata en Asia duplicaba al de Europa. Mientras tanto, las minas de Zacatecas, Guanajuato y San Luis Potosí producían toneladas de este metal. En Manila, los mercaderes chinos (sangleyes) intercambiaban sedas, porcelana y especias por Reales de a Ocho acuñados en México."
+  },
+  {
+    title: "Documento II: El Tornaviaje de Andrés de Urdaneta",
+    text: "Durante cuarenta años tras la expedición de Magallanes, los navegantes sabían llegar de América a Filipinas usando los vientos alisios, pero no lograban regresar por tener el viento en contra. En 1565, Andrés de Urdaneta resolvió el problema navegando hacia el norte hasta los 38°-40° de latitud (frente a Japón), donde aprovechó la corriente de Kuroshio y los vientos del oeste para cruzar el Pacífico hasta California."
+  },
+  {
+    title: "Documento III: La Vida a Bordo y el Escorbuto",
+    text: "El viaje por el Pacífico duraba entre cuatro y seis meses sin tocar tierra. La dieta consistía en bizcocho (pan horneado dos veces), carne salada y agua almacenada en barriles. La falta de vitamina C provocaba escorbuto ('mal de Loanda'): encías sangrantes, caída de dientes y muerte. El consumo de cítricos y alimentos frescos detenía la enfermedad."
+  },
+  {
+    title: "Documento IV: Nueva España como Eje Comercial",
+    text: "Al desembarcar en Acapulco, las mercancías asiáticas viajaban en mulas hacia Puebla y la Ciudad de México. Este intercambio introdujo en México el mango, el tamarindo, el arroz y la porcelana china (que inspiró la Talavera poblana), mientras que de América salieron hacia Asia y Europa el chile, el maíz, el jitomate, el tabaco y el cacao."
+  },
+  {
+    title: "Documento V: Impuestos Reales y Flota de Indias",
+    text: "Toda la plata extraída en América debía pasar por las Cajas Reales para pagar el impuesto del 'Quinto Real' (20%) y recibir el sello oficial; transportar plata 'sin quintar' se castigaba con la confiscación de bienes. En los puertos se cobraba el 'Almojarifazgo'. Para proteger los cargamentos de corsarios y piratas, los barcos cruzaban el Atlántico en convoyes llamados Flota de Indias hasta la Casa de Contratación de Sevilla."
+  }
+];
+
+// ==========================================
+// GLOSARIO
+// ==========================================
+const GLOSSARY = [
+  ["Almojarifazgo", "Impuesto aduanero que cobraba la Corona Española por la entrada y salida de mercancías en los puertos."],
+  ["Bizcocho", "Galleta de harina y agua horneada dos veces para resistir meses en altamar sin pudrirse."],
+  ["Calma chicha", "Ausencia total de viento durante días o semanas, dejando los barcos de vela inmóviles en el océano."],
+  ["Casa de Contratación de Sevilla", "Institución fundada en 1503 que regulaba el comercio, los impuestos y las licencias de viaje entre España, América y Asia."],
+  ["Corsario vs. Filibustero", "El corsario atacaba barcos enemigos con permiso escrito de un rey rival; el filibustero era un pirata que actuaba por cuenta propia."],
+  ["Escorbuto", "Enfermedad causada por la falta prolongada de vitamina C."],
+  ["Flota de Indias", "Convoy de barcos mercantes protegidos por galeones de guerra para cruzar el Atlántico."],
+  ["Parián", "Mercado establecido en Manila (y luego en la Ciudad de México) donde mercaderes chinos vendían productos asiáticos."],
+  ["Plata Quintada", "Plata que ya había pagado el impuesto del 20% ('Quinto Real') y llevaba el sello oficial de legalidad."],
+  ["Real de a Ocho", "Moneda de plata acuñada en Nueva España y Perú utilizada en el comercio internacional."]
+];
+
+// ==========================================
+// LOS 8 RETOS
+// ==========================================
+const STEPS = [
+  {
+    loc: "Reto 1 de 8 • Manila, Filipinas",
+    title: "El Comercio de Plata en el Parián",
+    context: "Has llegado a Manila. En el mercado del <strong>Parián</strong>, mercaderes chinos ofrecen seda, porcelana y pimienta a cambio de monedas de plata acuñadas en Nueva España, ya que el Imperio Ming exige el pago de sus impuestos internos exclusivamente en plata.",
+    actionIntro: "El escribano del puerto te pide cerrar la cuenta exacta de tres lotes antes de que cambie la marea. Tendrás <strong>20 segundos</strong> para elegir el total correcto.",
+    btnNext: "Continuar al cálculo",
+    btnStart: "Iniciar suma",
+    type: "math_timer"
+  },
+  {
+    loc: "Reto 2 de 8 • Océano Pacífico Norte",
+    title: "El Tornaviaje y la Calma Chicha",
+    context: "Siguiendo la ruta trazada por <strong>Andrés de Urdaneta</strong>, navegaste hacia el norte cerca de Japón para tomar la corriente de Kuroshio rumbo a América. Sin embargo, en medio del Pacífico el viento desaparece por completo (<strong>calma chicha</strong>) y las reservas de comida comienzan a bajar.",
+    actionIntro: "Para evitar que se agoten las raciones, debes pescar. Detén la línea roja dentro de la franja dorada en <strong>5 intentos</strong> (cada tiro aumenta la velocidad).",
+    btnNext: "Continuar a la pesca",
+    type: "fishing"
+  },
+  {
+    loc: "Reto 3 de 8 • Alta Mar",
+    title: "Escasez y Escorbuto a Bordo",
+    context: "Tras cuatro meses sin ver tierra, el agua está estancada y varios marineros presentan encías sangrantes, caída de dientes y debilidad extrema. Solo queda un pequeño barril de limas en conserva en la bodega.",
+    actionIntro: "Consulta el <em>Documento III del Códice</em> si necesitas confirmar qué causa este mal y decide cómo actuar:",
+    btnNext: "Ver opciones",
+    type: "choice",
+    opts: [
+      {
+        t: "A) Repartir las limas en raciones iguales entre toda la tripulación enferma.",
+        f: -10, h: 0, m: +15, s: 0,
+        msg: "La vitamina C detiene el escorbuto. Ningún tripulante fallece y la confianza en tu mando se fortalece."
+      },
+      {
+        t: "B) Reservar las limas para los oficiales y cerrar las escotillas para evitar el aire nocturno.",
+        f: -5, h: +5, m: -25, s: 0,
+        msg: "Cerrar las escotillas vició el aire y la falta de vitamina C provocó bajas entre los marineros, hundiendo la moral."
+      }
+    ]
+  },
+  {
+    loc: "Reto 4 de 8 • Costas de Baja California",
+    title: "Persecución de Corsarios Ingleses",
+    context: "Al avistar las costas de Baja California, dos navíos corsarios ingleses intentan interceptar tu galeón. Inglaterra no tenía acceso directo a las rutas asiáticas y financiaba corsarios para capturar los cargamentos españoles antes de que llegaran a puerto.",
+    actionIntro: "<strong>Maniobra de evasión (45 segundos • 3 vidas):</strong><br>Esquiva los barcos corsarios (🏴‍☠️) y los arrecifes (🪨) tocando el mar, deslizando el dedo o usando los botones. La velocidad aumentará cada 15 segundos.",
+    btnNext: "Preparar maniobra",
+    btnStart: "Iniciar escape (45s)",
+    type: "ship_escape",
+    mode: "corsarios"
+  },
+  {
+    loc: "Reto 5 de 8 • Puerto de Acapulco",
+    title: "La Feria de Acapulco",
+    context: "Has desembarcado en Acapulco. Comerciantes de la Ciudad de México, Puebla y Perú llegan cargados con monedas de plata para comprar tus mercancías asiáticas antes de que sean trasladadas por tierra hacia el centro del virreinato.",
+    actionIntro: "Vendes <strong>5 fardos de seda a 140 pesos</strong> cada uno y pagas <strong>120 pesos</strong> por el alquiler de mulas para cruzar la sierra. Calcula la ganancia neta:",
+    btnNext: "Continuar al cobro",
+    type: "trade_math"
+  },
+  {
+    loc: "Reto 6 de 8 • Camino Real y Puebla",
+    title: "Taller Alfarero en Puebla de los Ángeles",
+    context: "Avanzas por tierra rumbo al Golfo de México. En Puebla, un maestro alfarero examina tu porcelana china azul y blanca y te propone un trato comercial: si le entregas <strong>4 piezas de porcelana china</strong> (valuadas en <strong>50 pesos</strong> cada una) para estudiar su esmalte y diseño, él te entregará el <strong>25% de su próxima hornada de 20 piezas</strong> de loza vidriada (que podrás vender en Veracruz a <strong>70 pesos</strong> cada una), además de abastecerte con alimentos frescos.",
+    actionIntro: "Analiza la rentabilidad del intercambio (valor de las piezas que entregas frente al valor del 25% de la hornada que recibirás) y decide:",
+    btnNext: "Analizar trato",
+    type: "choice",
+    opts: [
+      {
+        t: "A) Aceptar el intercambio con el maestro alfarero y recibir el 25% de su producción más víveres frescos.",
+        f: +15, h: 0, m: +10, s: +150,
+        msg: "Trato rentable: entregaste piezas por valor de 200 pesos y recibiste 5 piezas (25% de 20) vendidas en 350 pesos (+150 pesos netos), además de provisiones frescas y el impulso a la Talavera poblana."
+      },
+      {
+        t: "B) Rechazar el trato porque consideras que ceder 4 piezas de porcelana china representa una pérdida económica.",
+        f: -10, h: 0, m: -5, s: 0,
+        msg: "Dejaste pasar un buen negocio: el 25% de 20 piezas equivale a 5 piezas (350 pesos en Veracruz), lo que superaba los 200 pesos de tus 4 piezas chinas."
+      },
+      {
+        t: "C) Aceptar el trato pero exigirle solo el 10% de su producción de 20 piezas para cerrar rápido el acuerdo.",
+        f: +5, h: 0, m: 0, s: -60,
+        msg: "Error de cálculo: el 10% de 20 piezas son apenas 2 piezas (140 pesos), menos de los 200 pesos que valía tu porcelana china, generando una pérdida de 60 pesos."
+      }
+    ]
+  },
+  {
+    loc: "Reto 7 de 8 • Ciudad de México y Veracruz",
+    title: "Inspección de la Real Hacienda",
+    context: "Tras cruzar la Ciudad de México y descender al puerto de Veracruz para embarcar en la <strong>Flota de Indias</strong>, los oficiales de la Real Hacienda inspeccionan tus cofres para verificar que todo el cargamento cumpla con las leyes fiscales del Imperio.",
+    actionIntro: "Consulta el <em>Documento V del Códice</em> y el <em>Glosario</em> para identificar qué debes declarar ante la aduana:",
+    btnNext: "Presentar declaración",
+    type: "choice",
+    opts: [
+      {
+        t: "A) Declarar ante la Caja Real 25 lingotes de plata que aún no cuentan con el sello oficial del impuesto del 20%.",
+        f: -10, h: 0, m: +10, s: +150,
+        msg: "Cumpliste con la normativa fiscal: al manifestar la plata antes del embarque evitaste la confiscación total de tus bienes y recibiste una gratificación oficial."
+      },
+      {
+        t: "B) Declarar únicamente las monedas ya selladas por la Casa de Moneda y ocultar los lingotes sin sello en el doble fondo de un baúl.",
+        f: -10, h: 0, m: -15, s: -300,
+        msg: "Los inspectores detectaron los lingotes sin sello durante el registro y te impusieron una multa de 300 pesos por intentar evadir el impuesto real."
+      }
+    ]
+  },
+  {
+    loc: "Reto 8 de 8 • Canal de las Bahamas hacia Sevilla",
+    title: "Escape Final hacia Sevilla",
+    context: "Tras reunirte en La Habana con la Flota de Indias, una tormenta dispersa el convoy en el Canal de las Bahamas. Fragatas filibusteras aprovechan la niebla para intentar abordar tu navío antes de cruzar el Atlántico rumbo a la <strong>Casa de Contratación de Sevilla</strong>.",
+    actionIntro: "<strong>Prueba final de navegación (45 segundos • 3 vidas):</strong><br>Esquiva las fragatas filibusteras (🏴‍☠️) y los arrecifes (🪨) durante <strong>45 segundos</strong>. La velocidad aumentará cada 15 segundos.",
+    btnNext: "Preparar navegación final",
+    btnStart: "Iniciar escape final (45s)",
+    type: "ship_escape",
+    mode: "filibusteros"
+  }
+];
+
+// ==========================================
+// MOTOR DEL JUEGO
+// ==========================================
+let st = { idx: -1, food: 80, hull: 90, moral: 75, silver: 1000 };
+let activeTimers = [];
+
+function clearTimers() {
+  activeTimers.forEach(id => clearInterval(id));
+  activeTimers = [];
+}
+
+function toggleFullScreen() {
+  const docEl = document.documentElement;
+  const reqFs = docEl.requestFullscreen || docEl.webkitRequestFullscreen;
+  const exitFs = document.exitFullscreen || document.webkitExitFullscreen;
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    if (reqFs) {
+      reqFs.call(docEl).catch(() => {
+        alert("En iPad puedes usar 'Añadir a pantalla de inicio' en Safari para verlo a pantalla completa.");
+      });
+    }
+  } else {
+    if (exitFs) exitFs.call(document);
+  }
+}
+
+function renderStart() {
+  clearTimers();
+  document.getElementById('hud').style.display = 'none';
+  document.getElementById('title-bar').style.display = 'block';
+  document.getElementById('prog').style.width = '0%';
+  document.getElementById('stage').innerHTML = `
+    <div>
+      <div class="meta">Historia • Siglos XVI – XVII</div>
+      <h1>Ruta Comercial: De Manila a Sevilla</h1>
+
+      <div class="alert-pill">
+        <span class="icon">📖</span>
+        <div><strong>¡Lee con atención para ganar!</strong> Analiza cada situación y consulta el <strong>Códice</strong> y el <strong>Glosario</strong> en la barra superior.</div>
+      </div>
+
+      <div class="cards-3">
+        <div class="info-card">
+          <span class="ic-icon">🗺️</span>
+          <h3>8 Retos</h3>
+          <p>Supera 8 etapas desde Filipinas hasta España avanzando paso a paso.</p>
+        </div>
+        <div class="info-card">
+          <span class="ic-icon">⚖️</span>
+          <h3>Equilibrio</h3>
+          <p>Si <strong>Víveres, Casco o Moral</strong> llegan a <strong>0%</strong>, pierdes la partida.</p>
+        </div>
+        <div class="info-card">
+          <span class="ic-icon">📜</span>
+          <h3>Diploma</h3>
+          <p>Al llegar a Sevilla descarga una imagen con tu nombre y resultados.</p>
+        </div>
+      </div>
+
+      <div class="indicators-bar">
+        <div class="indicators-title">¿Qué sube y qué baja tus indicadores?</div>
+        <div class="ind-list">
+          <div class="ind-item">🍖 <div><strong>Víveres:</strong> <span>Suben al pescar o comprar comida; bajan al navegar.</span></div></div>
+          <div class="ind-item">⛵ <div><strong>Casco:</strong> <span>Baja si chocas con rocas o barcos enemigos.</span></div></div>
+          <div class="ind-item">🧭 <div><strong>Moral:</strong> <span>Sube con decisiones acertadas; baja con errores.</span></div></div>
+          <div class="ind-item">🪙 <div><strong>Plata:</strong> <span>Sube con buenos negocios y escapes; baja con multas.</span></div></div>
+        </div>
+      </div>
+
+      <button class="primary btn-animated" onclick="renderPrologue()">⛵ Comenzar Reto</button>
+    </div>
+  `;
+}
+
+// ==========================================
+// LECTURA DE CONTEXTO HISTÓRICO PREVIA AL RETO 1
+// ==========================================
+function renderPrologue() {
+  document.getElementById('stage').innerHTML = `
+    <div>
+      <div class="meta">Contexto Histórico • El Origen de la Ruta</div>
+      <h2>¿Cómo comenzó este viaje y por qué cambió el mundo?</h2>
+      <p>
+        En <strong>1565</strong>, el cosmógrafo y navegante <strong>Andrés de Urdaneta</strong> logró resolver un enigma que había detenido a los exploradores durante cuatro décadas: encontrar una ruta de regreso desde Filipinas hasta América aprovechando las corrientes del Pacífico Norte (el <em>Tornaviaje</em>).
+      </p>
+
+      <div class="history-grid">
+        <div class="history-card">
+          <h4>El Puente entre Tres Continentes</h4>
+          <p>Por primera vez en la historia, <strong>Asia, América y Europa</strong> quedaron conectadas de forma permanente. Los galeones zarpaban de Manila hacia Acapulco, la mercancía cruzaba Nueva España por tierra hasta Veracruz y continuaba en flota hacia Sevilla.</p>
+        </div>
+        <div class="history-card">
+          <h4>La Plata que Impulsó el Comercio</h4>
+          <p>La plata extraída de minas novohispanas como Zacatecas y Guanajuato era el producto más buscado en China. A cambio, llegaban a América y Europa sedas, porcelana, especias, alimentos y técnicas artesanales que transformaron la vida cotidiana.</p>
+        </div>
+      </div>
+
+      <button class="primary btn-animated" onclick="startGame()">Zarpar hacia el Reto 1 (Manila) ➔</button>
+    </div>
+  `;
+}
+
+function startGame() {
+  st = { idx: 0, food: 80, hull: 90, moral: 75, silver: 1000 };
+  renderStepContext();
+}
+
+function updateHUD() {
+  document.getElementById('title-bar').style.display = 'none';
+  document.getElementById('hud').style.display = 'flex';
+  const f = document.getElementById('v-food');
+  const h = document.getElementById('v-hull');
+  const m = document.getElementById('v-moral');
+  f.textContent = Math.max(0, st.food);
+  h.textContent = Math.max(0, st.hull);
+  m.textContent = Math.max(0, st.moral);
+  document.getElementById('v-plata').textContent = Math.max(0, st.silver);
+
+  f.className = st.food <= 25 ? 'danger' : '';
+  h.className = st.hull <= 25 ? 'danger' : '';
+  m.className = st.moral <= 25 ? 'danger' : '';
+  document.getElementById('prog').style.width = `${(st.idx / STEPS.length) * 100}%`;
+}
+
+function checkGameOver() {
+  let reason = "";
+  if (st.food <= 0) reason = "Víveres en 0%: La tripulación no resistió el hambre y el escorbuto.";
+  else if (st.hull <= 0) reason = "Casco en 0%: El barco sufrió daños irreparables y se hundió.";
+  else if (st.moral <= 0) reason = "Moral en 0%: La tripulación se amotinó y abandonó la expedición.";
+
+  if (reason) {
+    clearTimers();
+    showFullScreenNotice("Expedición Fracasada", reason, 0, 0, 0, 0, true);
+    return true;
+  }
+  return false;
+}
+
+// ==========================================
+// PASO 1: SOLO CONTEXTO HISTÓRICO
+// ==========================================
+function renderStepContext() {
+  clearTimers();
+  updateHUD();
+  if (checkGameOver()) return;
+
+  const s = STEPS[st.idx];
+  document.getElementById('stage').innerHTML = `
+    <div>
+      <div class="meta">${s.loc}</div>
+      <h2>${s.title}</h2>
+      <p>${s.context}</p>
+    </div>
+    <div>
+      <button class="secondary" onclick="renderStepAction()">${s.btnNext} ➔</button>
+    </div>
+  `;
+}
+
+// ==========================================
+// PASO 2: RETO / DECISIÓN / MINIJUEGO
+// ==========================================
+function renderStepAction() {
+  const s = STEPS[st.idx];
+  document.getElementById('stage').innerHTML = `
+    <div>
+      <div class="meta">${s.loc}</div>
+      <h2>${s.title}</h2>
+      <div class="step-rules">${s.actionIntro}</div>
+      <div id="work"></div>
+    </div>
+  `;
+
+  const w = document.getElementById('work');
+  if (s.type === 'choice') {
+    w.innerHTML = `<div class="options">${s.opts.map((o, i) => `<button class="opt" onclick="pickChoice(${i})">${o.t}</button>`).join('')}</div>`;
+  } else if (s.type === 'math_timer') {
+    w.innerHTML = `<button class="primary btn-animated" onclick="initMathTimer(document.getElementById('work'))">${s.btnStart}</button>`;
+  } else if (s.type === 'fishing') {
+    initFishing(w);
+  } else if (s.type === 'trade_math') {
+    initTradeMath(w);
+  } else if (s.type === 'ship_escape') {
+    w.innerHTML = `<button class="primary btn-animated" onclick="initShipEscape(document.getElementById('work'), '${s.mode}')">${s.btnStart}</button>`;
+  }
+}
+
+function apply(f, h, m, s) {
+  st.food = Math.min(100, st.food + f);
+  st.hull = Math.min(100, st.hull + h);
+  st.moral = Math.min(100, st.moral + m);
+  st.silver = Math.max(0, st.silver + s);
+  updateHUD();
+}
+
+function pickChoice(i) {
+  const o = STEPS[st.idx].opts[i];
+  apply(o.f, o.h, o.m, o.s);
+  if (!checkGameOver()) {
+    showFullScreenNotice("Resultado de la Ronda", o.msg, o.f, o.h, o.m, o.s, false);
+  }
+}
+
+// ==========================================
+// PANTALLA DE AVANCE LIMPIA
+// ==========================================
+function showFullScreenNotice(title, msg, f, h, m, s, isDead) {
+  clearTimers();
+  const fs = document.getElementById('fullscreen-feedback');
+  const card = document.getElementById('fs-card-content');
+  const isLast = st.idx === STEPS.length - 1;
+
+  const tag = (v, lbl) => v === 0 ? '' : `<span class="${v > 0 ? 'b-pos' : 'b-neg'}">${lbl}: ${v > 0 ? '+' : ''}${v}</span>`;
+
+  card.innerHTML = `
+    <h2>${title}</h2>
+    <p>${msg}</p>
+    <div class="status-strip">
+      <div>🍖 Víveres<strong>${Math.max(0, st.food)}%</strong></div>
+      <div>⛵ Casco<strong>${Math.max(0, st.hull)}%</strong></div>
+      <div>🧭 Moral<strong>${Math.max(0, st.moral)}%</strong></div>
+      <div>🪙 Plata<strong>${Math.max(0, st.silver)}</strong></div>
+    </div>
+    ${isDead ? '' : `<div class="badges">${tag(f,'Víveres')}${tag(h,'Casco')}${tag(m,'Moral')}${tag(s,'Plata')}</div>`}
+    <button class="primary btn-animated" onclick="closeFullScreenNotice(${isDead}, ${isLast})">
+      ${isDead ? 'Reiniciar Travesía' : (isLast ? 'Ver Resultados Finales' : 'Avanzar a la Siguiente Ronda')}
+    </button>
+  `;
+  fs.style.display = 'flex';
+}
+
+function closeFullScreenNotice(isDead, isLast) {
+  document.getElementById('fullscreen-feedback').style.display = 'none';
+  if (isDead) {
+    renderStart();
+  } else if (isLast) {
+    renderVictory();
+  } else {
+    st.idx++;
+    renderStepContext();
+  }
+}
+
+// ==========================================
+// MINIJUEGO 1: SUMA INTERMEDIA (CON DECENAS Y UNIDADES)
+// ==========================================
+function initMathTimer(w) {
+  const a = (Math.floor(Math.random() * 5) + 4) * 15 + 3; // 63, 78, 93, 108, 123
+  const b = (Math.floor(Math.random() * 5) + 3) * 14 + 5; // 47, 61, 75, 89, 103
+  const c = (Math.floor(Math.random() * 4) + 2) * 12 + 4; // 28, 40, 52, 64
+  const ans = a + b + c;
+  const opts = [ans, ans + 10, ans - 10, ans + 18].sort(() => Math.random() - 0.5);
+  let t = 20;
+
+  w.innerHTML = `
+    <div class="mg-box">
+      <div style="display:flex; justify-content:space-between; font-size:0.92rem; font-weight:600;">
+        <span>Suma los tres lotes:</span><span id="t-lbl" style="color:var(--crimson);">20s</span>
+      </div>
+      <div class="timer-track"><div class="timer-fill" id="t-bar"></div></div>
+      <p style="text-align:center; font-size:1.3rem; font-weight:bold; margin-bottom:16px;">Seda (${a}) + Porcelana (${b}) + Pimienta (${c}) = ?</p>
+      <div class="grid-2">${opts.map(v => `<button class="btn-num" onclick="endMath(${v},${ans})">${v} pesos</button>`).join('')}</div>
+    </div>
+  `;
+
+  const tid = setInterval(() => {
+    t -= 0.2;
+    const bar = document.getElementById('t-bar');
+    const lbl = document.getElementById('t-lbl');
+    if (bar) bar.style.width = `${Math.max(0, (t / 20) * 100)}%`;
+    if (lbl) lbl.textContent = `${Math.ceil(t)}s`;
+    if (t <= 0) {
+      clearTimers();
+      apply(-5, 0, -10, -150);
+      if (!checkGameOver()) {
+        showFullScreenNotice("Tiempo Agotado", `La suma correcta era ${ans} pesos. Al retrasarte perdiste 150 pesos y parte de tus víveres.`, -5, 0, -10, -150, false);
+      }
+    }
+  }, 200);
+  activeTimers.push(tid);
+}
+
+function endMath(val, ans) {
+  clearTimers();
+  if (val === ans) {
+    apply(0, 0, +10, +250);
+    if (!checkGameOver()) {
+      showFullScreenNotice("Cuenta Correcta", `Cerraste el intercambio por ${ans} pesos sin errores y ganaste 250 pesos extra.`, 0, 0, +10, +250, false);
+    }
+  } else {
+    apply(-5, 0, -10, -150);
+    if (!checkGameOver()) {
+      showFullScreenNotice("Error en la Cuenta", `El total correcto era ${ans} pesos. El mercader aprovechó la confusión para cobrarte 150 pesos de más.`, -5, 0, -10, -150, false);
+    }
+  }
+}
+
+// ==========================================
+// MINIJUEGO 2: PESCA (5 INTENTOS)
+// ==========================================
+function initFishing(w) {
+  let pos = 0, dir = 1, hits = 0, tries = 0;
+  let speed = 2.1;
+
+  w.innerHTML = `
+    <div class="mg-box" style="text-align:center;">
+      <div id="f-stat" style="font-size:0.95rem; font-weight:600;">Aciertos: 0 • Intentos: 0 / 5</div>
+      <div class="water"><div class="zone"></div><div class="needle" id="needle"></div></div>
+      <button class="primary" id="f-btn">Lanzar Arpón</button>
+    </div>
+  `;
+
+  const tid = setInterval(() => {
+    pos += dir * speed;
+    if (pos >= 98) { pos = 98; dir = -1; }
+    if (pos <= 0) { pos = 0; dir = 1; }
+    const n = document.getElementById('needle');
+    if (n) n.style.left = pos + '%';
+  }, 22);
+  activeTimers.push(tid);
+
+  document.getElementById('f-btn').onclick = () => {
+    tries++;
+    if (pos >= 40 && pos <= 60) hits++;
+    speed += 0.7;
+    document.getElementById('f-stat').textContent = `Aciertos: ${hits} • Intentos: ${tries} / 5`;
+
+    if (tries >= 5) {
+      clearTimers();
+      document.getElementById('f-btn').disabled = true;
+      if (hits >= 3) {
+        apply(+15, 0, +10, 0);
+        if (!checkGameOver()) showFullScreenNotice("Buena Pesca", `Atrapaste ${hits} de 5 peces. Lograste reponer las reservas de comida.`, +15, 0, +10, 0, false);
+      } else if (hits >= 1) {
+        apply(-5, 0, 0, 0);
+        if (!checkGameOver()) showFullScreenNotice("Pesca Escasa", `Atrapaste ${hits} de 5 peces. Apenas alcanzó para reducir la pérdida de víveres.`, -5, 0, 0, 0, false);
+      } else {
+        apply(-25, 0, -15, 0);
+        if (!checkGameOver()) showFullScreenNotice("Sin Capturas", "Fallaste los 5 intentos. La calma chicha redujo tus víveres y la moral.", -25, 0, -15, 0, false);
+      }
+    }
+  };
+}
+
+// ==========================================
+// MINIJUEGO 3: OPERACIÓN EN ACAPULCO
+// ==========================================
+function initTradeMath(w) {
+  w.innerHTML = `
+    <div class="mg-box">
+      <p style="text-align:center; font-weight:bold; font-size:1.15rem; margin-bottom:14px;">(5 fardos × 140 pesos) − 120 pesos de mulas = ?</p>
+      <div class="grid-2">
+        <button class="btn-num" onclick="endTrade(580)">580 pesos</button>
+        <button class="btn-num" onclick="endTrade(620)">620 pesos</button>
+        <button class="btn-num" onclick="endTrade(700)">700 pesos</button>
+        <button class="btn-num" onclick="endTrade(540)">540 pesos</button>
+      </div>
+    </div>
+  `;
+}
+
+function endTrade(val) {
+  if (val === 580) {
+    apply(+20, +10, +10, +580);
+    if (!checkGameOver()) showFullScreenNotice("Venta Exacta en Acapulco", "Obtuviste 580 pesos netos y reabasteciste la expedición con alimentos y reparaciones.", +20, +10, +10, +580, false);
+  } else {
+    apply(+10, 0, -10, +380);
+    if (!checkGameOver()) showFullScreenNotice("Error en el Cambio", "La ganancia real era 580 pesos. Perdiste 200 pesos en el intercambio.", +10, 0, -10, +380, false);
+  }
+}
+
+// ==========================================
+// MINIJUEGO 4 Y 8: BARCO MÁS DIFÍCIL (45 SEGUNDOS / 3 VIDAS / TÁCTIL IPAD)
+// ==========================================
+function initShipEscape(w, mode) {
+  let lane = 1;
+  const laneY = [22, 86, 150];
+  let obstacles = [];
+  let timeLeft = 45;
+  let lives = 3;
+  let finished = false;
+
+  const enemyLabel = mode === 'corsarios' ? 'Corsarios Ingleses' : 'Filibusteros';
+
+  w.innerHTML = `
+    <div class="mg-box">
+      <div style="display:flex; justify-content:space-between; font-weight:600; font-size:0.94rem;">
+        <span>⏱️ Tiempo: <span id="esc-time" style="color:var(--crimson);">45s</span></span>
+        <span>Intensidad: <span id="esc-lvl">1x</span></span>
+        <span>Vidas: <span id="esc-lives">❤️❤️❤️</span></span>
+      </div>
+      <div class="sea-escape" id="sea-escape">
+        <div class="lane-guide" style="top:70px;"></div>
+        <div class="lane-guide" style="top:140px;"></div>
+        <div class="player-ship" id="p-ship" style="top:${laneY[lane]}px;">⛵</div>
+      </div>
+      <div class="escape-controls">
+        <button class="btn-num" id="btn-up">⬆ Subir</button>
+        <button class="btn-num" id="btn-down">⬇ Bajar</button>
+      </div>
+    </div>
+  `;
+
+  const renderLives = () => {
+    const el = document.getElementById('esc-lives');
+    if (el) el.textContent = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(Math.max(0, 3 - lives));
+  };
+
+  const setLane = (newLane) => {
+    if (finished) return;
+    lane = Math.max(0, Math.min(2, newLane));
+    const ship = document.getElementById('p-ship');
+    if (ship) ship.style.top = laneY[lane] + 'px';
+  };
+
+  const moveShip = (dir) => setLane(lane + dir);
+
+  document.getElementById('btn-up').onclick = () => moveShip(-1);
+  document.getElementById('btn-down').onclick = () => moveShip(1);
+
+  // Soporte táctil nativo para iPad (tocar carril o deslizar)
+  const arenaEl = document.getElementById('sea-escape');
+  let touchStartY = null;
+  arenaEl.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 0) {
+      touchStartY = e.touches[0].clientY;
+      const rect = arenaEl.getBoundingClientRect();
+      const relY = e.touches[0].clientY - rect.top;
+      if (relY < 70) setLane(0);
+      else if (relY < 140) setLane(1);
+      else setLane(2);
+    }
+  }, { passive: true });
+
+  arenaEl.addEventListener('touchmove', (e) => {
+    if (touchStartY === null || e.touches.length === 0) return;
+    const diffY = e.touches[0].clientY - touchStartY;
+    if (Math.abs(diffY) > 22) {
+      moveShip(diffY > 0 ? 1 : -1);
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  arenaEl.addEventListener('click', (e) => {
+    const rect = arenaEl.getBoundingClientRect();
+    const relY = e.clientY - rect.top;
+    if (relY < 70) setLane(0);
+    else if (relY < 140) setLane(1);
+    else setLane(2);
+  });
+
+  const keyHandler = (e) => {
+    if (e.key === 'ArrowUp') { e.preventDefault(); moveShip(-1); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); moveShip(1); }
+  };
+  window.addEventListener('keydown', keyHandler);
+
+  const finishEscape = () => {
+    if (finished) return;
+    finished = true;
+    window.removeEventListener('keydown', keyHandler);
+    clearTimers();
+
+    let fDelta = -10, hDelta = 0, mDelta = 0, sDelta = 0, title = "", msg = "";
+
+    if (lives === 3) {
+      hDelta = 0;
+      mDelta = +15;
+      sDelta = mode === 'corsarios' ? +200 : +300;
+      title = "Escape Impecable";
+      msg = `Evadiste a los ${enemyLabel} durante los 45 segundos sin recibir impactos. Conservaste tus 3 vidas.`;
+    } else if (lives >= 1) {
+      hDelta = -15;
+      mDelta = 0;
+      sDelta = mode === 'corsarios' ? +50 : +100;
+      title = "Escape con Daños Menores";
+      msg = `Lograste escapar de los ${enemyLabel} con ${lives} vida(s) restante(s), pero el casco sufrió impactos.`;
+    } else {
+      hDelta = -35;
+      mDelta = -20;
+      sDelta = mode === 'corsarios' ? -200 : -250;
+      title = "Barco Averiado";
+      msg = `Perdiste tus 3 vidas ante los ${enemyLabel}. El navío sufrió daños severos en el casco.`;
+    }
+
+    apply(fDelta, hDelta, mDelta, sDelta);
+    if (!checkGameOver()) {
+      showFullScreenNotice(title, msg, fDelta, hDelta, mDelta, sDelta, false);
+    }
+  };
+
+  let tick = 0;
+  const spawnObstacleInLane = (arena, obsLane, offsetX = 0) => {
+    const icon = Math.random() > 0.42 ? '🏴‍☠️' : '🪨';
+    const el = document.createElement('div');
+    el.className = 'obstacle';
+    el.textContent = icon;
+    el.style.top = laneY[obsLane] + 'px';
+    el.style.left = (arena.clientWidth + offsetX) + 'px';
+    arena.appendChild(el);
+    obstacles.push({ el, x: arena.clientWidth + offsetX, lane: obsLane, hit: false });
+  };
+
+  const gameLoop = setInterval(() => {
+    if (finished) return;
+    const arena = document.getElementById('sea-escape');
+    if (!arena) return;
+
+    tick++;
+    const elapsed = 45 - timeLeft;
+    // Sube de nivel cada 15 segundos (1x, 2x, 3x)
+    const level = Math.min(3, Math.floor(elapsed / 15) + 1);
+    const lvlEl = document.getElementById('esc-lvl');
+    if (lvlEl) lvlEl.textContent = level + 'x';
+
+    // Mayor frecuencia y velocidad que antes
+    const spawnInterval = level === 1 ? 13 : (level === 2 ? 10 : 8);
+    const moveSpeed = 9.5 + level * 3.2;
+
+    if (tick % spawnInterval === 0) {
+      const obsLane = Math.floor(Math.random() * 3);
+      spawnObstacleInLane(arena, obsLane, 0);
+
+      // En nivel 2 y 3 pueden aparecer 2 obstáculos simultáneos dejando siempre 1 carril libre
+      if ((level === 2 && Math.random() < 0.45) || (level === 3 && Math.random() < 0.75)) {
+        const otherLanes = [0, 1, 2].filter(l => l !== obsLane);
+        const secondLane = otherLanes[Math.floor(Math.random() * otherLanes.length)];
+        spawnObstacleInLane(arena, secondLane, 18);
+      }
+    }
+
+    obstacles.forEach((o, i) => {
+      o.x -= moveSpeed;
+      o.el.style.left = o.x + 'px';
+
+      if (!o.hit && o.x < 62 && o.x > 16 && o.lane === lane) {
+        o.hit = true;
+        lives--;
+        o.el.textContent = '💥';
+        renderLives();
+        if (lives <= 0) finishEscape();
+      }
+
+      if (o.x < -40) {
+        o.el.remove();
+        obstacles.splice(i, 1);
+      }
+    });
+  }, 40);
+  activeTimers.push(gameLoop);
+
+  const countdown = setInterval(() => {
+    if (finished) return;
+    timeLeft--;
+    const tEl = document.getElementById('esc-time');
+    if (tEl) tEl.textContent = timeLeft + 's';
+    if (timeLeft <= 0) finishEscape();
+  }, 1000);
+  activeTimers.push(countdown);
+}
+
+// ==========================================
+// PANTALLA FINAL Y DESCARGA DE IMAGEN PNG (SIN TOP 10)
+// ==========================================
+function calcScore() {
+  const silverScore = Math.min(100, Math.round((st.silver / 1900) * 100));
+  const avg = ((st.food + st.hull + st.moral + silverScore) / 4).toFixed(1);
+  return { avg: parseFloat(avg), silverScore };
+}
+
+function downloadDiploma() {
+  const rawName = document.getElementById('player-name').value.trim();
+  const studentName = rawName ? rawName.slice(0, 38) : "Expedicionario Anónimo";
+  const { avg, silverScore } = calcScore();
+  const today = new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 900;
+  canvas.height = 560;
+  const ctx = canvas.getContext('2d');
+
+  // Fondo pergamino limpio
+  ctx.fillStyle = '#f8f5ef';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Marco exterior e interior
+  ctx.strokeStyle = '#241e18';
+  ctx.lineWidth = 8;
+  ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+
+  ctx.strokeStyle = '#c29123';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(34, 34, canvas.width - 68, canvas.height - 68);
+
+  // Encabezado
+  ctx.fillStyle = '#962b2b';
+  ctx.font = 'bold 18px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('HISTORIA • RUTA COMERCIAL SIGLOS XVI – XVII', canvas.width / 2, 85);
+
+  ctx.fillStyle = '#241e18';
+  ctx.font = 'bold 34px Georgia, serif';
+  ctx.fillText('De Manila a Sevilla: Travesía Completada', canvas.width / 2, 132);
+
+  // Nombre del alumno
+  ctx.fillStyle = '#665c52';
+  ctx.font = '18px sans-serif';
+  ctx.fillText('Otorgado a:', canvas.width / 2, 182);
+
+  ctx.fillStyle = '#1d5270';
+  ctx.font = 'bold 32px Georgia, serif';
+  ctx.fillText(studentName, canvas.width / 2, 224);
+
+  // Línea divisoria
+  ctx.strokeStyle = '#d8ccb8';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(140, 250);
+  ctx.lineTo(760, 250);
+  ctx.stroke();
+
+  // Promedio destacado
+  ctx.fillStyle = '#1c703d';
+  ctx.font = 'bold 42px sans-serif';
+  ctx.fillText(`Promedio Final: ${avg} / 100`, canvas.width / 2, 308);
+
+  // Tarjetas de los 4 indicadores
+  const stats = [
+    { label: 'Víveres', val: `${st.food}%` },
+    { label: 'Casco', val: `${st.hull}%` },
+    { label: 'Moral', val: `${st.moral}%` },
+    { label: 'Plata', val: `${st.silver} (${silverScore} pts)` }
+  ];
+
+  const boxW = 175;
+  const gap = 18;
+  const startX = (canvas.width - (boxW * 4 + gap * 3)) / 2;
+
+  stats.forEach((item, idx) => {
+    const x = startX + idx * (boxW + gap);
+    const y = 345;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(x, y, boxW, 95);
+    ctx.strokeStyle = '#d8ccb8';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, boxW, 95);
+
+    ctx.fillStyle = '#665c52';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.fillText(item.label, x + boxW / 2, y + 34);
+
+    ctx.fillStyle = '#241e18';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.fillText(item.val, x + boxW / 2, y + 68);
+  });
+
+  // Fecha al pie
+  ctx.fillStyle = '#665c52';
+  ctx.font = '15px sans-serif';
+  ctx.fillText(`Casa de Contratación de Sevilla • ${today}`, canvas.width / 2, 492);
+
+  // Descarga de archivo PNG compatible con iPad Safari
+  const fileName = `Resultados_Manila_Sevilla_${studentName.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]/g, '_')}.png`;
+  const dataUrl = canvas.toDataURL('image/png');
+  const link = document.createElement('a');
+  link.download = fileName;
+  link.href = dataUrl;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  const feedbackEl = document.getElementById('download-msg');
+  if (feedbackEl) {
+    feedbackEl.innerHTML = `Imagen generada. Si estás en iPad y no se guardó directo en Fotos, abre la descarga en Safari (ícono ↓ arriba a la derecha) y elige <strong>"Guardar imagen"</strong>.`;
+  }
+}
+
+function renderVictory() {
+  clearTimers();
+  document.getElementById('prog').style.width = '100%';
+  const { avg, silverScore } = calcScore();
+
+  document.getElementById('stage').innerHTML = `
+    <div>
+      <div class="meta">Llegada a Sevilla • Fin de la Travesía</div>
+      <h2>Promedio Final: ${avg} / 100</h2>
+
+      <div class="diploma-preview">
+        <div class="status-strip" style="margin-bottom:12px;">
+          <div>🍖 Víveres<strong>${st.food}%</strong></div>
+          <div>⛵ Casco<strong>${st.hull}%</strong></div>
+          <div>🧭 Moral<strong>${st.moral}%</strong></div>
+          <div>🪙 Plata<strong>${st.silver} (${silverScore} pts)</strong></div>
+        </div>
+        <p style="font-size:0.92rem; color:var(--muted); margin:0;">
+          Escribe tu nombre completo para descargar una imagen con tus estadísticas y guardarla en tu iPad.
+        </p>
+      </div>
+
+      <div style="display:flex; gap:12px; margin-bottom:14px; flex-wrap:wrap; align-items:center;">
+        <input type="text" id="player-name" placeholder="Escribe tu nombre completo">
+        <button class="primary btn-animated" onclick="downloadDiploma()">📥 Descargar Imagen de Resultados</button>
+      </div>
+
+      <p id="download-msg" style="font-size:0.88rem; color:var(--emerald); margin-bottom:16px;"></p>
+
+      <button class="opt" onclick="renderStart()">Volver al Inicio</button>
+    </div>
+  `;
+}
+
+// ==========================================
+// MODALES (CÓDICE Y GLOSARIO)
+// ==========================================
+function openModal(type) {
+  const box = document.getElementById('modal-content');
+  if (type === 'codex') {
+    box.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h2 style="margin:0;">Códice de Lectura Histórica</h2>
+        <button class="btn-top" style="background:var(--ink);" onclick="closeModal()">Cerrar</button>
+      </div>
+      ${CODEX.map(c => `<div class="entry-item"><h4>${c.title}</h4><p style="margin:0;">${c.text}</p></div>`).join('')}
+    `;
+  } else {
+    box.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h2 style="margin:0;">Glosario de Términos</h2>
+        <button class="btn-top" style="background:var(--ink);" onclick="closeModal()">Cerrar</button>
+      </div>
+      ${GLOSSARY.map(g => `<div class="entry-item"><h4>${g[0]}</h4><p style="margin:0;">${g[1]}</p></div>`).join('')}
+    `;
+  }
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+renderStart();
+</script>
+</body>
+</html>
